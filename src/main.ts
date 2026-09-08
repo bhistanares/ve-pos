@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import PrimeVue from 'primevue/config';
-import Aura from '@primeuix/themes/aura';
+import PrimeVue from 'primevue/config'
+import Aura from '@primeuix/themes/aura'
 import { definePreset } from '@primeuix/themes'
 
 import './assets/main.css'
@@ -52,7 +52,10 @@ const FlashPreset = definePreset(Aura, {
 
 app.use(PrimeVue, {
     theme: {
-        preset: FlashPreset
+        preset: FlashPreset,
+        options: {
+            darkModeSelector: '.app-dark',
+        }
     }
 })
 
