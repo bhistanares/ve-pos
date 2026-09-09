@@ -24,6 +24,12 @@ const menuItems = ref([
         items: [
             {icon: "pi pi-th-large", to: "/", label: "Dashboard" }
         ]
+    },
+    {
+        label : "Management",
+        items: [
+            {icon: "pi pi-tag", to: "/product-categories", label: "Product Categories" }
+        ]
     }
 ])
 </script>
