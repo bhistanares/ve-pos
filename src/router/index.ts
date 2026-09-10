@@ -3,6 +3,8 @@ import Login from '@/pages/auth/Login.vue'
 import Dashboard from '@/pages/Dashboard.vue'
 import CategoryList from '@/pages/product-categories/CategoryList.vue'
 import CategoryForm from '@/pages/product-categories/CategoryForm.vue'
+import ProductList from '@/pages/products/ProductList.vue'
+import ProductForm from '@/pages/products/ProductForm.vue'
 import { useAuthStore } from '@/stores/auth.store'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -39,6 +41,21 @@ const router = createRouter({
           path: '/product-categories/:id/edit',
           name: 'product-categories-edit',
           component: CategoryForm
+        },
+        {
+          path: '/products',
+          name: 'products',
+          component: ProductList
+        },
+        {
+          path: '/products/create',
+          name: 'products-create',
+          component: ProductForm
+        },
+        {
+          path: '/products/:id/edit',
+          name: 'products-edit',
+          component: ProductForm
         }
       ]
     }
