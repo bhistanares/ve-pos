@@ -1,0 +1,77 @@
+import { getCustomers } from "@/api/customers-api"
+import type { Customer } from "@/types/customer"
+import { defineStore } from "pinia"
+
+export const useCustomerStore = defineStore('customer', {
+    state: ()=> ({
+        items: [] as Customer[],
+        pagination: {
+            current_page: 1,
+            last_page: 1,
+            per_page: 10,
+            total: 0,
+            from: 0,
+            to: 0
+        },
+        page: 1,
+        limit: 10,
+        search: '',
+        loading: false
+    }),
+
+    getters: {
+        currentPage: (state) => state.pagination.current_page || 1,
+        totalPages: (state) => state.pagination.last_page || 1
+    },
+
+    actions: {
+        async fetch(){
+            this.loading = true
+
+            try{
+                const params: Record<string, any> = {
+                    page: this.page,
+                    limit: this.limit
+                }
+                
+                if (this.search) {
+                    params.search = this.search
+                }
+
+                const res = await getCustomers(params)
+
+                this.items = res.data.data.items
+                this.pagination = res.data.data.pagination
+            } catch (error) {
+                console.error('Failed to fetch customers:', error)
+            } finally {
+                this.loading = false 
+            }
+        },
+
+        setPage(page: number) {
+            this.page = page
+            this.fetch()
+        },
+        
+        setLimit(limit: number){
+            this.limit = limit
+            this.page = 1
+            this.fetch()
+        },
+
+        nextPage() {
+            if(this.pagination.current_page < this.pagination.last_page){
+                this.page = this.pagination.current_page + 1
+                this.fetch()
+            }
+        },
+
+        prevPage() {
+            if(this.pagination.current_page > 1){
+                this.page = this.pagination.current_page - 1
+                this.fetch()
+            }
+        }
+    }
+})
